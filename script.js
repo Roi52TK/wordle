@@ -8,10 +8,12 @@ const gameState = {
     currentRow: 0,
     currentGuess: "",
     gameOver: false,
-    results: [] 
+    results: [],
+    lettersStatus: new Map()
 };
 
 const MATCH_TYPE = {
+    UNKNOWN: "U",
     CORRECT: "G",
     PRESENT: "Y",
     ABSENT: "B"
@@ -34,6 +36,7 @@ const board = document.getElementById("game-board");
 const keyboard = document.getElementById("keyboard");
 
 const boardTiles = [];
+const keyboardKeys = new Map();
 
 function createBoard() {
     for (let i = 0; i < gameSettings.maxTries; i++) {
@@ -59,10 +62,19 @@ function createKeyboard() {
             const keyData = keysData[keyRow][keyCol];
             const keyBtn = document.createElement("button");
             keyBtn.textContent = keyData.label;
+            keyboardKeys.set(keyData.label, keyBtn); // Add button to map
             keyBtn.addEventListener("click", () => handleKeyEvent(keyData));
             row.appendChild(keyBtn);
         }
         keyboard.appendChild(row);
+    }
+}
+
+function resetLettersStatus() {
+    // Iterating codes from A to Z
+    for(let c = 97; c <= 122; c++) {
+        const char = String.fromCharCode(c).toUpperCase();
+        gameState.lettersStatus.set(char, MATCH_TYPE.UNKNOWN);
     }
 }
 
@@ -106,7 +118,9 @@ function onEnterClickEvent() {
     compareGuess();
     const result = gameState.results[gameState.currentRow];
     displayGuessResult(result);
-    let isWin = checkGuessResult(result);
+    updateLettersStatus(result);
+    updateKeyboardDisplay();
+    const isWin = checkGuessResult(result);
 
     if(isWin) {
         onGameWon();
@@ -135,6 +149,50 @@ function displayGuessResult(result) {
     // For testing
     const subtitle = document.getElementById("sub-title");
     subtitle.textContent = result.join("");
+}
+
+function updateLettersStatus(result) {
+    for(let i = 0; i < result.length; i++) {
+        const char = gameState.currentGuess[i];
+
+        // Anyway if char is correct then status is correct
+        if(result[i] === MATCH_TYPE.CORRECT) {
+            gameState.lettersStatus.set(char, MATCH_TYPE.CORRECT);
+        }
+
+        // Char status unknown
+        else if (gameState.lettersStatus.get(char) === MATCH_TYPE.UNKNOWN) {
+            // Char is not in secret word
+            if (result[i] === MATCH_TYPE.ABSENT) {
+                // Absent status
+                gameState.lettersStatus.set(char, MATCH_TYPE.ABSENT);
+            }
+            else {
+                // Wrong position therefore present
+                gameState.lettersStatus.set(char, MATCH_TYPE.PRESENT);
+            }
+        }
+    }
+}
+
+function updateKeyboardDisplay() {
+    // Change button background color of each letter according to its status
+    gameState.lettersStatus.forEach((value, key, map) => {
+        const button = keyboardKeys.get(key);
+        
+        if(value === MATCH_TYPE.UNKNOWN) {
+            button.style.backgroundColor = "dark-gray";
+        }
+        else if (value === MATCH_TYPE.CORRECT) {
+            button.style.backgroundColor = "green";
+        }
+        else if (value === MATCH_TYPE.PRESENT) {
+            button.style.backgroundColor = "yellow";
+        }
+        else if(value === MATCH_TYPE.ABSENT) {
+            button.style.backgroundColor = "gray";
+        }
+    })
 }
 
 function compareGuess() {
@@ -213,3 +271,5 @@ function onGameWon() {
 
 createBoard();
 createKeyboard();
+resetLettersStatus();
+updateKeyboardDisplay();
