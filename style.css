@@ -1,0 +1,14 @@
+#game-board {
+    
+}
+
+.row {
+    display: flex;
+}
+
+.tile {
+    border: 2px solid;
+    height: 40px;
+    width: 40px;
+    margin: 10px;
+}
