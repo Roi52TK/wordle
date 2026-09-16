@@ -252,9 +252,22 @@ function updateGuessDisplay() {
 }
 
 function displayGuessResult(result) {
-    // For testing
-    const subtitle = document.getElementById("sub-title");
-    subtitle.textContent = result.join("");
+    for(let i = 0; i < result.length; i++) {
+        const tile = boardTiles[gameState.currentRow][i];
+        let color;
+
+        if(result[i] === MATCH_TYPE.ABSENT) {
+            color = "gray";
+        }
+        else if (result[i] === MATCH_TYPE.CORRECT) {
+            color = "green";
+        }
+        else if (result[i] === MATCH_TYPE.PRESENT) {
+            color = "yellow";
+        }
+
+        tile.style.backgroundColor = color;
+    }
 }
 
 function updateLettersStatus(result) {
@@ -289,12 +302,6 @@ function updateKeyboardDisplay() {
         if(value === MATCH_TYPE.UNKNOWN) {
             // Button default background color
             button.style.backgroundColor = "";
-        }
-        else if (value === MATCH_TYPE.CORRECT) {
-            button.style.backgroundColor = "green";
-        }
-        else if (value === MATCH_TYPE.PRESENT) {
-            button.style.backgroundColor = "yellow";
         }
         else if(value === MATCH_TYPE.ABSENT) {
             button.style.backgroundColor = "gray";
