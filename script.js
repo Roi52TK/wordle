@@ -134,6 +134,17 @@ const keysData = keys.map(row =>
     }))
 );
 
+const keysDataMap = new Map(
+    keysData.flat().map(obj => [obj.label, obj])
+);
+
+document.addEventListener("keydown", (event) => {
+    const key = event.key.toUpperCase();
+    if (keysDataMap.has(key)) {
+        handleKeyEvent(keysDataMap.get(key));
+    }
+})
+
 const board = document.getElementById("game-board");
 const keyboard = document.getElementById("keyboard");
 
