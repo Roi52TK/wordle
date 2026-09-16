@@ -19,6 +19,108 @@ const MATCH_TYPE = {
     ABSENT: "B"
 }
 
+const secretWords = [
+    "APPLE",
+    "GRAPE",
+    "HOUSE",
+    "PLANT",
+    "LIGHT",
+    "WATER",
+    "MOUSE",
+    "TRAIN",
+    "STONE",
+    "CLOUD",
+    "BEACH",
+    "BREAD",
+    "CHAIR",
+    "DREAM",
+    "HEART"
+];
+
+const allowedWords = [
+    "APPLE",
+    "GRAPE",
+    "HOUSE",
+    "PLANT",
+    "LIGHT",
+    "WATER",
+    "MOUSE",
+    "TRAIN",
+    "STONE",
+    "CLOUD",
+    "BEACH",
+    "BREAD",
+    "CHAIR",
+    "DREAM",
+    "HEART",
+    "ABOUT",
+    "ABOVE",
+    "AFTER",
+    "AGAIN",
+    "ALONE",
+    "ANGEL",
+    "BLACK",
+    "BLAME",
+    "BLIND",
+    "BRAIN",
+    "BRAVE",
+    "BRING",
+    "CARRY",
+    "CAUSE",
+    "CLEAR",
+    "CLOSE",
+    "CRAZY",
+    "EARTH",
+    "EMPTY",
+    "ENJOY",
+    "EVERY",
+    "FIGHT",
+    "FINAL",
+    "FIRST",
+    "FRONT",
+    "GIANT",
+    "GREEN",
+    "HAPPY",
+    "HORSE",
+    "HOUSE",
+    "IMAGE",
+    "JUICE",
+    "LEARN",
+    "MUSIC",
+    "NIGHT",
+    "OCEAN",
+    "PAPER",
+    "PEACE",
+    "PHONE",
+    "PIANO",
+    "PLACE",
+    "PLANE",
+    "POWER",
+    "QUEEN",
+    "QUIET",
+    "RADIO",
+    "RIGHT",
+    "ROUND",
+    "SMILE",
+    "SOUND",
+    "SPACE",
+    "SPEAK",
+    "SWEET",
+    "TABLE",
+    "TEACH",
+    "THING",
+    "THINK",
+    "THROW",
+    "TODAY",
+    "TOUCH",
+    "TRUST",
+    "VOICE",
+    "WATCH",
+    "WORLD",
+    "WRITE",
+    "YOUNG"
+];
+
 const keys = [
     ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
     ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
@@ -107,12 +209,15 @@ function onBackSpaceClickEvent() {
 }
 
 function onEnterClickEvent() {
+    // Length of word is illegal
     if(gameState.currentGuess.length !== gameSettings.wordLength) {
         return;
     }
 
-    // Check if word is valid...
-
+    // Check if word is not allowed
+    if(!allowedWords.includes(gameState.currentGuess)) {
+        return;
+    }
 
     // Enter logic
     compareGuess();
@@ -127,11 +232,12 @@ function onEnterClickEvent() {
         return;
     }
 
+    // Move onto the next row and reset current guess
     gameState.currentRow++;
     gameState.currentGuess = "";
 
     if(gameState.currentRow === gameSettings.maxTries) {
-        gameState.gameOver = true;
+        onGameLost();
     }
 }
 
@@ -181,7 +287,8 @@ function updateKeyboardDisplay() {
         const button = keyboardKeys.get(key);
         
         if(value === MATCH_TYPE.UNKNOWN) {
-            button.style.backgroundColor = "dark-gray";
+            // Button default background color
+            button.style.backgroundColor = "";
         }
         else if (value === MATCH_TYPE.CORRECT) {
             button.style.backgroundColor = "green";
@@ -263,13 +370,42 @@ function checkGuessResult(result) {
 }
 
 function onGameWon() {
-    gameState.gameOver = true;
     // For testing
     const subtitle = document.getElementById("sub-title");
     subtitle.textContent = "YOU WON!!!!";
+    gameOver();
+}
+
+function onGameLost() {
+    // For testing
+    const subtitle = document.getElementById("sub-title");
+    subtitle.textContent = "You lost:(";
+    gameOver();
+}
+
+function gameOver() {
+    gameState.gameOver = true;
+    // For testing
+    const subtitle = document.getElementById("sub-title");
+    subtitle.textContent += "The secret word was: " + gameState.secretWord;
+}
+
+function chooseRandomSecretWord() {
+    const rndIndex = Math.floor(Math.random() * secretWords.length);
+    gameState.secretWord = secretWords[rndIndex];
+}
+
+function startNewGame() {
+    gameState.currentRow = 0;
+    gameState.currentGuess = "";
+    gameState.gameOver = false;
+    gameState.results = [];
+
+    resetLettersStatus();
+    updateKeyboardDisplay();
+    chooseRandomSecretWord();
 }
 
 createBoard();
 createKeyboard();
-resetLettersStatus();
-updateKeyboardDisplay();
+startNewGame();
