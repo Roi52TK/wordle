@@ -1,14 +1,155 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background: #121213;
+    color: #ffffff;
+
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#header {
+    text-align: center;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+#main-title {
+    margin: 0;
+    font-size: 42px;
+    font-weight: 800;
+    letter-spacing: 4px;
+}
+
+#sub-title {
+    margin: 8px 0 0;
+    color: #a5a5a5;
+    font-size: 16px;
+}
+
+/* Game board */
+
 #game-board {
-    
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
 
 .row {
     display: flex;
+    gap: 6px;
 }
 
 .tile {
-    border: 2px solid;
-    height: 40px;
-    width: 40px;
-    margin: 10px;
+    width: 58px;
+    height: 58px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: 2px solid #3a3a3c;
+    border-radius: 4px;
+
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.tile.correct {
+    background-color: #0b6d09;
+}
+
+.tile.present {
+    background-color: #e2c016;
+}
+
+.tile.absent {
+    background-color: #202020;
+}
+
+/* Keyboard */
+
+#keyboard {
+    margin-top: 30px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+}
+
+.keyboard-row {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+}
+
+.keyboard-button {
+    height: 54px;
+    min-width: 43px;
+    padding: 0 8px;
+
+    border: none;
+    border-radius: 5px;
+
+    background: #818384;
+    color: white;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.08s ease,
+        background-color 0.15s ease;
+}
+
+.keyboard-button.absent {
+    background-color: #202020;
+}
+
+.keyboard-button:hover {
+    background: #a0a0a0;
+}
+
+.keyboard-button:active {
+    transform: scale(0.94);
+}
+
+/* Special keys */
+
+.keyboard-button:first-child,
+.keyboard-button:last-child {
+    min-width: 65px;
+}
+
+/* Responsive */
+
+@media (max-width: 500px) {
+    .tile {
+        width: 48px;
+        height: 48px;
+        font-size: 23px;
+    }
+
+    .keyboard-button {
+        min-width: 32px;
+        height: 48px;
+        padding: 0 5px;
+        font-size: 12px;
+    }
+
+    .keyboard-button:first-child,
+    .keyboard-button:last-child {
+        min-width: 52px;
+    }
 }

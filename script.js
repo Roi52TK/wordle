@@ -174,6 +174,7 @@ function createKeyboard() {
         for (let keyCol = 0; keyCol < keysData[keyRow].length; keyCol++) {
             const keyData = keysData[keyRow][keyCol];
             const keyBtn = document.createElement("button");
+            keyBtn.className = "keyboard-button";
             keyBtn.textContent = keyData.label;
             keyboardKeys.set(keyData.label, keyBtn); // Add button to map
             keyBtn.addEventListener("click", () => handleKeyEvent(keyData));
@@ -265,19 +266,16 @@ function updateGuessDisplay() {
 function displayGuessResult(result) {
     for(let i = 0; i < result.length; i++) {
         const tile = boardTiles[gameState.currentRow][i];
-        let color;
 
         if(result[i] === MATCH_TYPE.ABSENT) {
-            color = "gray";
+            tile.classList.add("absent");
         }
         else if (result[i] === MATCH_TYPE.CORRECT) {
-            color = "green";
+            tile.classList.add("correct");
         }
         else if (result[i] === MATCH_TYPE.PRESENT) {
-            color = "yellow";
+            tile.classList.add("present");
         }
-
-        tile.style.backgroundColor = color;
     }
 }
 
@@ -310,12 +308,8 @@ function updateKeyboardDisplay() {
     gameState.lettersStatus.forEach((value, key, map) => {
         const button = keyboardKeys.get(key);
         
-        if(value === MATCH_TYPE.UNKNOWN) {
-            // Button default background color
-            button.style.backgroundColor = "";
-        }
-        else if(value === MATCH_TYPE.ABSENT) {
-            button.style.backgroundColor = "gray";
+        if(value === MATCH_TYPE.ABSENT) {
+            button.classList.add("absent");
         }
     })
 }
@@ -405,7 +399,7 @@ function gameOver() {
     gameState.gameOver = true;
     // For testing
     const subtitle = document.getElementById("sub-title");
-    subtitle.textContent += "The secret word was: " + gameState.secretWord;
+    subtitle.textContent += " The secret word was: " + gameState.secretWord;
 }
 
 function chooseRandomSecretWord() {
