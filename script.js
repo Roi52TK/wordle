@@ -164,13 +164,12 @@ function onEnterClickEvent() {
 
 function showMessage(messageText) {
     message.textContent = messageText;
-    message.style.visibility = "visible";
 
-    clearTimeout(messageTimeout);
+    message.classList.remove("fade");
 
-    messageTimeout = setTimeout(() => {
-        message.style.visibility = "hidden";
-    }, 2000);
+    void message.offsetWidth; // restart animation
+
+    message.classList.add("fade");
 }
 
 function updateGuessDisplay() {

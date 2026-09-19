@@ -29,6 +29,14 @@ body {
     letter-spacing: 4px;
 }
 
+#credits {
+    margin: 0;
+    color: #d5d1d1;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+
 #sub-title {
     margin: 8px 0 0;
     color: #a5a5a5;
@@ -36,7 +44,9 @@ body {
 }
 
 #message {
-    visibility: hidden;
+    margin-top: 150px;
+    position: fixed;
+    opacity: 0;
 
     margin-bottom: 15px;
     padding: 10px 18px;
@@ -48,6 +58,17 @@ body {
 
     font-size: 16px;
     font-weight: 700;
+}
+
+.fade {
+    animation: fadeInOut 2s ease-in-out;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; }
 }
 
 #play-again-btn {
@@ -84,6 +105,7 @@ body {
 /* Game board */
 
 #game-board {
+    margin-top: 50px;
     display: flex;
     flex-direction: column;
     gap: 6px;
