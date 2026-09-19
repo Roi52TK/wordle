@@ -147,9 +147,12 @@ document.addEventListener("keydown", (event) => {
 
 const board = document.getElementById("game-board");
 const keyboard = document.getElementById("keyboard");
+const message = document.getElementById("message");
 
 const boardTiles = [];
 const keyboardKeys = new Map();
+
+let messageTimeout;
 
 function createBoard() {
     for (let i = 0; i < gameSettings.maxTries; i++) {
@@ -223,11 +226,13 @@ function onBackSpaceClickEvent() {
 function onEnterClickEvent() {
     // Length of word is illegal
     if(gameState.currentGuess.length !== gameSettings.wordLength) {
+        showMessage("Not enough letters!");
         return;
     }
 
     // Check if word is not allowed
     if(!allowedWords.includes(gameState.currentGuess)) {
+        showMessage("Word is not allowed!");
         return;
     }
 
@@ -251,6 +256,17 @@ function onEnterClickEvent() {
     if(gameState.currentRow === gameSettings.maxTries) {
         onGameLost();
     }
+}
+
+function showMessage(messageText) {
+    message.textContent = messageText;
+    message.style.visibility = "visible";
+
+    clearTimeout(messageTimeout);
+
+    messageTimeout = setTimeout(() => {
+        message.style.visibility = "hidden";
+    }, 2000);
 }
 
 function updateGuessDisplay() {
