@@ -6,7 +6,7 @@ The project was created as a small JavaScript practice project, focusing on DOM 
 
 ## Play Online
 
-[**🎮 Play Wordle**](https://yourusername.github.io/wordle/)
+[**🎮 Play Wordle**](https://roi52tk.github.io/wordle/)
 
 ## Features
 
