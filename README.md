@@ -2,7 +2,7 @@
 
 A simple Wordle-inspired word guessing game built with **HTML, CSS, and vanilla JavaScript**.
 
-The project was created as a small JavaScript practice project, focusing on DOM manipulation, event handling, game state management, and implementing the Wordle game logic from scratch.
+The project was created as a small JavaScript practice project, focusing on DOM manipulation, event handling, game state management, modular JavaScript, asynchronous JavaScript, and implementing the Wordle game logic from scratch.
 
 ## Features
 
@@ -23,6 +23,7 @@ The project was created as a small JavaScript practice project, focusing on DOM 
 * Tile flip animations when submitting a guess
 * Responsive layout for smaller screens
 * Play Again functionality
+* JavaScript organized into separate modules
 
 ## How to Play
 
@@ -40,12 +41,18 @@ The project was created as a small JavaScript practice project, focusing on DOM 
 
 ```text
 wordle/
+
 ├── data/
 │   ├── allowed-words.json
 │   └── secret-words.json
+├── js/
+│   ├── main.js
+│   ├── gameState.js
+│   ├── game.js
+│   ├── wordLogic.js
+│   └── ui.js
 ├── index.html
 ├── style.css
-├── script.js
 └── README.md
 ```
 
@@ -57,20 +64,58 @@ Contains the basic structure of the game, including the header, game board, mess
 
 Controls the visual appearance of the game, including the board, keyboard, responsive layout, and animations.
 
-### `script.js`
+### `js/main.js`
 
-Contains the game logic, including:
+Serves as the entry point of the application.
 
-* Game state and settings
+It initializes the game by:
+
+* Loading the word lists
+* Creating the game board
+* Creating the on-screen keyboard
+* Starting a new game
+
+### `js/gameState.js`
+
+Contains the game's shared state and settings, including:
+
+* Game settings
+* Current game state
+* Match result types
+
+### `js/game.js`
+
+Contains the main game flow and input handling, including:
+
 * Keyboard input handling
+* Guess submission
 * Guess validation
-* Word comparison
-* Duplicate-letter handling
-* Letter status tracking
 * Game win/loss handling
-* Dynamic board and keyboard creation
-* Loading word lists
-* Animations and UI updates
+* Starting a new game
+* Connecting user input with the game logic and UI
+
+### `js/wordLogic.js`
+
+Contains the word-related logic, including:
+
+* Comparing guesses with the secret word
+* Handling duplicate letters
+* Checking whether a guess is correct
+* Selecting a random secret word
+* Loading the word lists from JSON files
+
+### `js/ui.js`
+
+Contains the functions responsible for updating and creating the user interface, including:
+
+* Creating the game board
+* Creating the on-screen keyboard
+* Displaying the current guess
+* Displaying guess results
+* Updating keyboard letter states
+* Showing messages
+* Playing animations
+* Resetting the board
 
 ### `data/`
 
@@ -108,6 +153,7 @@ This project was mainly built to practice JavaScript and web development concept
 * Objects and arrays
 * `Map`
 * Functions and program structure
+* Modular JavaScript
 * State management
 * Asynchronous JavaScript
 * `fetch()` and JSON
@@ -117,6 +163,8 @@ This project was mainly built to practice JavaScript and web development concept
 * Algorithm design
 
 A significant part of the project was implementing Wordle's duplicate-letter behavior correctly using a two-pass comparison algorithm with letter counts.
+
+The project was also structured into separate JavaScript modules to keep the game state, game logic, word logic, and UI code separated and easier to maintain.
 
 ## Possible Future Improvements
 
