@@ -116,18 +116,6 @@ body {
     gap: 6px;
 }
 
-.tile.shake {
-    animation: horizontal-shaking 0.25s ease-in-out;
-}
-
-@keyframes horizontal-shaking {
-    0% { transform: translateX(0) }
-    25% { transform: translateX(5px) }
-    50% { transform: translateX(-5px) }
-    75% { transform: translateX(5px) }
-    100% { transform: translateX(0) }
-}
-
 .tile {
     width: 58px;
     height: 58px;
@@ -141,6 +129,30 @@ body {
 
     font-size: 28px;
     font-weight: 700;
+}
+
+.tile.shake {
+    animation: horizontal-shaking 0.25s ease-in-out;
+}
+
+@keyframes horizontal-shaking {
+    0% { transform: translateX(0) }
+    25% { transform: translateX(5px) }
+    50% { transform: translateX(-5px) }
+    75% { transform: translateX(5px) }
+    100% { transform: translateX(0) }
+}
+
+.tile.flip {
+    animation: tile-flip 0.5s;
+}
+
+@keyframes tile-flip {
+    0% { transform: rotateX(0deg); }
+    50% { 
+        transform: rotateX(90deg);
+     }
+    100% { transform: rotateX(0deg); }
 }
 
 .tile.correct {

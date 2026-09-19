@@ -195,18 +195,26 @@ function updateGuessDisplay() {
 }
 
 function displayGuessResult(result) {
+    const flipDelay = 0.25; // Space between each tile flip
+    const resultDelay = 0.25; // Should be half of CSS flip animation
     for(let i = 0; i < result.length; i++) {
         const tile = boardTiles[gameState.currentRow][i];
+        const nextFlip = flipDelay * i;
 
-        if(result[i] === MATCH_TYPE.ABSENT) {
-            tile.classList.add("absent");
-        }
-        else if (result[i] === MATCH_TYPE.CORRECT) {
-            tile.classList.add("correct");
-        }
-        else if (result[i] === MATCH_TYPE.PRESENT) {
-            tile.classList.add("present");
-        }
+        tile.style.animationDelay = nextFlip + "s";
+        tile.classList.add("flip");
+
+        setTimeout(() => {
+            if (result[i] === MATCH_TYPE.ABSENT) {
+                tile.classList.add("absent");
+            }
+            else if (result[i] === MATCH_TYPE.CORRECT) {
+                tile.classList.add("correct");
+            }
+            else if (result[i] === MATCH_TYPE.PRESENT) {
+                tile.classList.add("present");
+            }
+        }, (nextFlip + resultDelay) * 1000);
     }
 }
 
