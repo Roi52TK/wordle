@@ -1,6 +1,7 @@
 const gameSettings = {
     maxTries: 6,
-    wordLength: 5
+    wordLength: 5,
+    resultFlipDuration: 1500
 };
 
 const gameState = {
@@ -9,7 +10,8 @@ const gameState = {
     currentGuess: "",
     gameOver: false,
     results: [],
-    lettersStatus: new Map()
+    lettersStatus: new Map(),
+    isPaused: false
 };
 
 const MATCH_TYPE = {
@@ -100,7 +102,7 @@ function resetLettersStatus() {
 }
 
 function handleKeyEvent(keyData) {
-    if (gameState.gameOver) {
+    if (gameState.gameOver || gameState.isPaused) {
         return;
     }
 
@@ -150,18 +152,24 @@ function onEnterClickEvent() {
     updateKeyboardDisplay();
     const isWin = checkGuessResult(result);
 
-    if(isWin) {
-        onGameWon();
-        return;
-    }
+    // Pause input and game-over event until animation finished
+    gameState.isPaused = true;
+    setTimeout(() => {
+        if (isWin) {
+            onGameWon();
+            return;
+        }
 
-    // Move onto the next row and reset current guess
-    gameState.currentRow++;
-    gameState.currentGuess = "";
+        // Move onto the next row and reset current guess
+        gameState.currentRow++;
+        gameState.currentGuess = "";
 
-    if(gameState.currentRow === gameSettings.maxTries) {
-        onGameLost();
-    }
+        if (gameState.currentRow === gameSettings.maxTries) {
+            onGameLost();
+        }
+
+        gameState.isPaused = false;
+    }, gameSettings.resultFlipDuration)
 }
 
 function showMessage(messageText) {
@@ -195,7 +203,7 @@ function updateGuessDisplay() {
 }
 
 function displayGuessResult(result) {
-    const flipDelay = 0.25; // Space between each tile flip
+    const flipDelay = gameSettings.resultFlipDuration / gameSettings.wordLength / 1000; // Space between each tile flip
     const resultDelay = 0.25; // Should be half of CSS flip animation
     for(let i = 0; i < result.length; i++) {
         const tile = boardTiles[gameState.currentRow][i];
