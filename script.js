@@ -19,107 +19,8 @@ const MATCH_TYPE = {
     ABSENT: "B"
 }
 
-const secretWords = [
-    "APPLE",
-    "GRAPE",
-    "HOUSE",
-    "PLANT",
-    "LIGHT",
-    "WATER",
-    "MOUSE",
-    "TRAIN",
-    "STONE",
-    "CLOUD",
-    "BEACH",
-    "BREAD",
-    "CHAIR",
-    "DREAM",
-    "HEART"
-];
-
-const allowedWords = [
-    "APPLE",
-    "GRAPE",
-    "HOUSE",
-    "PLANT",
-    "LIGHT",
-    "WATER",
-    "MOUSE",
-    "TRAIN",
-    "STONE",
-    "CLOUD",
-    "BEACH",
-    "BREAD",
-    "CHAIR",
-    "DREAM",
-    "HEART",
-    "ABOUT",
-    "ABOVE",
-    "AFTER",
-    "AGAIN",
-    "ALONE",
-    "ANGEL",
-    "BLACK",
-    "BLAME",
-    "BLIND",
-    "BRAIN",
-    "BRAVE",
-    "BRING",
-    "CARRY",
-    "CAUSE",
-    "CLEAR",
-    "CLOSE",
-    "CRAZY",
-    "EARTH",
-    "EMPTY",
-    "ENJOY",
-    "EVERY",
-    "FIGHT",
-    "FINAL",
-    "FIRST",
-    "FRONT",
-    "GIANT",
-    "GREEN",
-    "HAPPY",
-    "HORSE",
-    "HOUSE",
-    "IMAGE",
-    "JUICE",
-    "LEARN",
-    "MUSIC",
-    "NIGHT",
-    "OCEAN",
-    "PAPER",
-    "PEACE",
-    "PHONE",
-    "PIANO",
-    "PLACE",
-    "PLANE",
-    "POWER",
-    "QUEEN",
-    "QUIET",
-    "RADIO",
-    "RIGHT",
-    "ROUND",
-    "SMILE",
-    "SOUND",
-    "SPACE",
-    "SPEAK",
-    "SWEET",
-    "TABLE",
-    "TEACH",
-    "THING",
-    "THINK",
-    "THROW",
-    "TODAY",
-    "TOUCH",
-    "TRUST",
-    "VOICE",
-    "WATCH",
-    "WORLD",
-    "WRITE",
-    "YOUNG"
-];
+let secretWords;
+let allowedWords;
 
 const keys = [
     ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
@@ -454,6 +355,25 @@ function startNewGame() {
     chooseRandomSecretWord();
 }
 
-createBoard();
-createKeyboard();
-startNewGame();
+async function loadSecretWords() {
+    const response = await fetch("data/secret-words.json");
+    secretWords = await response.json();
+}
+
+async function loadAllowedWords() {
+    const response = await fetch("data/allowed-words.json");
+    allowedWords = await response.json();
+}
+
+async function initializeGame() {
+    await Promise.all([
+        loadSecretWords(),
+        loadAllowedWords()
+    ]);
+
+    createBoard();
+    createKeyboard();
+    startNewGame();
+}
+
+initializeGame();
