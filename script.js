@@ -130,13 +130,15 @@ function onBackSpaceClickEvent() {
 function onEnterClickEvent() {
     // Length of word is illegal
     if(gameState.currentGuess.length !== gameSettings.wordLength) {
-        showMessage("Not enough letters!");
+        showMessage("Not enough letters");
+        shakeRow(gameState.currentRow);
         return;
     }
 
     // Check if word is not allowed
     if(!allowedWords.includes(gameState.currentGuess)) {
-        showMessage("Word is not allowed!");
+        showMessage("Not in word list");
+        shakeRow(gameState.currentRow);
         return;
     }
 
@@ -170,6 +172,16 @@ function showMessage(messageText) {
     void message.offsetWidth; // restart animation
 
     message.classList.add("fade");
+}
+
+function shakeRow(rowNum) {
+    const row = boardTiles[rowNum];
+
+    row.forEach(tile => {
+        tile.classList.remove("shake");
+        void tile.offsetWidth; // restart animation
+        tile.classList.add("shake");
+    })
 }
 
 function updateGuessDisplay() {

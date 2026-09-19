@@ -61,10 +61,10 @@ body {
 }
 
 .fade {
-    animation: fadeInOut 2s ease-in-out;
+    animation: fade-in-out 2s ease-in-out;
 }
 
-@keyframes fadeInOut {
+@keyframes fade-in-out {
     0% { opacity: 0; }
     20% { opacity: 1; }
     80% { opacity: 1; }
@@ -114,6 +114,18 @@ body {
 .row {
     display: flex;
     gap: 6px;
+}
+
+.tile.shake {
+    animation: horizontal-shaking 0.25s ease-in-out;
+}
+
+@keyframes horizontal-shaking {
+    0% { transform: translateX(0) }
+    25% { transform: translateX(5px) }
+    50% { transform: translateX(-5px) }
+    75% { transform: translateX(5px) }
+    100% { transform: translateX(0) }
 }
 
 .tile {
