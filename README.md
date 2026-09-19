@@ -4,6 +4,10 @@ A simple Wordle-inspired word guessing game built with **HTML, CSS, and vanilla 
 
 The project was created as a small JavaScript practice project, focusing on DOM manipulation, event handling, game state management, modular JavaScript, asynchronous JavaScript, and implementing the Wordle game logic from scratch.
 
+## Play Online
+
+[**🎮 Play Wordle**](https://yourusername.github.io/wordle/)
+
 ## Features
 
 * 6 attempts to guess a 5-letter word
