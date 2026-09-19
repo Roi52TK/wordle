@@ -145,9 +145,12 @@ document.addEventListener("keydown", (event) => {
     }
 })
 
+const subtitle = document.getElementById("sub-title");
 const board = document.getElementById("game-board");
 const keyboard = document.getElementById("keyboard");
 const message = document.getElementById("message");
+const playAgainBtn = document.getElementById("play-again-btn");
+playAgainBtn.addEventListener("click", startNewGame);
 
 const boardTiles = [];
 const keyboardKeys = new Map();
@@ -327,7 +330,22 @@ function updateKeyboardDisplay() {
         if(value === MATCH_TYPE.ABSENT) {
             button.classList.add("absent");
         }
+        else {
+            button.classList.remove("absent");
+        }
     })
+}
+
+function clearBoard() {
+    for(let row = 0; row < gameSettings.maxTries; row++) {
+        for(let char = 0; char < gameSettings.wordLength; char++) {
+            const tile = boardTiles[row][char];
+            tile.textContent = "";
+            tile.classList.remove("absent");
+            tile.classList.remove("present");
+            tile.classList.remove("correct");
+        }
+    }
 }
 
 function compareGuess() {
@@ -399,22 +417,20 @@ function checkGuessResult(result) {
 
 function onGameWon() {
     // For testing
-    const subtitle = document.getElementById("sub-title");
     subtitle.textContent = "YOU WON!!!!";
     gameOver();
 }
 
 function onGameLost() {
     // For testing
-    const subtitle = document.getElementById("sub-title");
     subtitle.textContent = "You lost:(";
     gameOver();
 }
 
 function gameOver() {
     gameState.gameOver = true;
+    playAgainBtn.style.visibility = "visible";
     // For testing
-    const subtitle = document.getElementById("sub-title");
     subtitle.textContent += " The secret word was: " + gameState.secretWord;
 }
 
@@ -429,6 +445,10 @@ function startNewGame() {
     gameState.gameOver = false;
     gameState.results = [];
 
+    playAgainBtn.style.visibility = "hidden";
+    subtitle.textContent = "Guess the word!"
+
+    clearBoard();
     resetLettersStatus();
     updateKeyboardDisplay();
     chooseRandomSecretWord();

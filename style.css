@@ -50,6 +50,37 @@ body {
     font-weight: 700;
 }
 
+#play-again-btn {
+    visibility: hidden;
+    margin-top: 20px;
+    height: 54px;
+    min-width: 43px;
+    padding: 0 8px;
+    
+    border: none;
+    border-radius: 5px;
+    
+    background: #036403;
+    color: white;
+    
+    font-size: 14px;
+    font-weight: 700;
+    
+    cursor: pointer;
+    
+    transition:
+        transform 0.08s ease,
+        background-color 0.15s ease;
+}
+
+#play-again-btn:hover {
+    background: #068b06;
+}
+
+#play-again-btn:active {
+    transform: scale(0.94);
+}
+
 /* Game board */
 
 #game-board {
