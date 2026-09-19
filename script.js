@@ -269,6 +269,9 @@ function clearBoard() {
         for(let char = 0; char < gameSettings.wordLength; char++) {
             const tile = boardTiles[row][char];
             tile.textContent = "";
+            tile.style.animationDelay = "0s";
+            tile.classList.remove("shake");
+            tile.classList.remove("flip");
             tile.classList.remove("absent");
             tile.classList.remove("present");
             tile.classList.remove("correct");
@@ -372,6 +375,7 @@ function startNewGame() {
     gameState.currentGuess = "";
     gameState.gameOver = false;
     gameState.results = [];
+    gameState.isPaused = false;
 
     playAgainBtn.style.visibility = "hidden";
     subtitle.textContent = "Guess the word!"
