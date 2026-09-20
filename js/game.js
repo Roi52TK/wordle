@@ -77,14 +77,15 @@ function onEnterClickEvent() {
     const result = gameState.results[gameState.currentRow];
 
     displayGuessResult(result);
-    updateLettersStatus(result);
-    updateKeyboardDisplay();
-
-    const isWin = checkGuessResult(result);
 
     gameState.isPaused = true;
 
     setTimeout(() => {
+        updateLettersStatus(result);
+        updateKeyboardDisplay();
+
+        const isWin = checkGuessResult(result);
+        
         if (isWin) {
             onGameWon();
             return;

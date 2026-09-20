@@ -211,6 +211,14 @@ body {
     background-color: #202020;
 }
 
+.keyboard-button.correct {
+    background-color: #0b6d09;
+}
+
+.keyboard-button.present {
+    background-color: #e2c016;
+}
+
 .keyboard-button:hover {
     background: #a0a0a0;
 }
@@ -228,7 +236,7 @@ body {
 
 /* Responsive */
 
-@media (max-width: 500px) {
+@media (max-width: 550px) {
     .tile {
         width: 48px;
         height: 48px;
@@ -245,5 +253,25 @@ body {
     .keyboard-button:first-child,
     .keyboard-button:last-child {
         min-width: 52px;
+    }
+}
+
+@media (max-width: 450px) {
+    .tile {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+    }
+
+    .keyboard-button {
+        min-width: 24px;
+        height: 30px;
+        padding: 0 4px;
+        font-size: 9px;
+    }
+
+    .keyboard-button:first-child,
+    .keyboard-button:last-child {
+        min-width: 40px;
     }
 }

@@ -166,11 +166,18 @@ export function updateKeyboardDisplay() {
     gameState.lettersStatus.forEach((value, key) => {
         const button = keyboardKeys.get(key);
 
+        button.classList.remove("absent");
+        button.classList.remove("correct");
+        button.classList.remove("present");
+
         if (value === MATCH_TYPE.ABSENT) {
             button.classList.add("absent");
         }
-        else {
-            button.classList.remove("absent");
+        else if(value === MATCH_TYPE.CORRECT) {
+            button.classList.add("correct");
+        }
+        else if(value === MATCH_TYPE.PRESENT) {
+            button.classList.add("present");
         }
     });
 }
