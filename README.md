@@ -2,7 +2,7 @@
 
 A simple Wordle-inspired word guessing game built with **HTML, CSS, and vanilla JavaScript**.
 
-The project was created as a small JavaScript practice project, focusing on DOM manipulation, event handling, game state management, modular JavaScript, asynchronous JavaScript, and implementing the Wordle game logic from scratch.
+The project was created as a JavaScript practice project, focusing on DOM manipulation, event handling, game state management, modular JavaScript, asynchronous JavaScript, CSS animations, responsive design, and implementing the Wordle game logic from scratch.
 
 ## Play Online
 
@@ -22,12 +22,14 @@ The project was created as a small JavaScript practice project, focusing on DOM 
   * 🟩 Correct letter and position
   * 🟨 Correct letter, wrong position
   * ⬛ Letter not present in the word
+* Animated letter input
 * Animated invalid guesses
 * Animated message notifications
-* Tile flip animations when submitting a guess
+* Tile flip animations when submitting a valid guess
 * Responsive layout for smaller screens
 * Play Again functionality
 * JavaScript organized into separate modules
+* Separate game state, game logic, word logic, and UI responsibilities
 
 ## How to Play
 
@@ -45,7 +47,6 @@ The project was created as a small JavaScript practice project, focusing on DOM 
 
 ```text
 wordle/
-
 ├── data/
 │   ├── allowed-words.json
 │   └── secret-words.json
@@ -66,7 +67,17 @@ Contains the basic structure of the game, including the header, game board, mess
 
 ### `style.css`
 
-Controls the visual appearance of the game, including the board, keyboard, responsive layout, and animations.
+Controls the visual appearance of the game, including:
+
+* Game board and tiles
+* On-screen keyboard
+* Tile result colors
+* Responsive layouts for smaller screens
+* Tile animations
+* Message animations
+* Button interactions
+
+The layout uses CSS media queries to adapt tile and keyboard sizes for smaller screens.
 
 ### `js/main.js`
 
@@ -92,10 +103,13 @@ Contains the game's shared state and settings, including:
 Contains the main game flow and input handling, including:
 
 * Keyboard input handling
+* On-screen keyboard interaction
 * Guess submission
 * Guess validation
+* Handling invalid guesses
 * Game win/loss handling
 * Starting a new game
+* Managing the pause state during result animations
 * Connecting user input with the game logic and UI
 
 ### `js/wordLogic.js`
@@ -110,23 +124,28 @@ Contains the word-related logic, including:
 
 ### `js/ui.js`
 
-Contains the functions responsible for updating and creating the user interface, including:
+Contains the functions responsible for creating and updating the user interface, including:
 
 * Creating the game board
 * Creating the on-screen keyboard
 * Displaying the current guess
 * Displaying guess results
 * Updating keyboard letter states
-* Showing messages
-* Playing animations
+* Showing temporary messages
+* Playing tile animations
+* Shaking rows for invalid guesses
 * Resetting the board
 
-### `data/`
+Tile animation classes are automatically removed when their CSS animations finish using the `animationend` event.
 
-Contains the word lists used by the game:
+## Data
+
+The `data/` directory contains the word lists used by the game:
 
 * `secret-words.json` — words that can be selected as the secret word.
 * `allowed-words.json` — words that can be submitted as guesses.
+
+Keeping these lists separately allows the game to have a larger set of accepted guesses while controlling which words can actually appear as secret words.
 
 ## Running the Project
 
@@ -138,6 +157,8 @@ For example, using **VS Code** with the **Live Server** extension:
 2. Start Live Server.
 3. Open the provided local URL in your browser.
 4. Start playing.
+
+The project is also deployed using GitHub Pages and can be played online from the link above.
 
 ## Technologies
 
@@ -162,21 +183,26 @@ This project was mainly built to practice JavaScript and web development concept
 * Asynchronous JavaScript
 * `fetch()` and JSON
 * CSS classes controlled from JavaScript
-* CSS animations
-* Responsive CSS
+* CSS animations and `@keyframes`
+* The `animationend` event
+* Responsive CSS and media queries
+* Keyboard and mouse input handling
 * Algorithm design
 
 A significant part of the project was implementing Wordle's duplicate-letter behavior correctly using a two-pass comparison algorithm with letter counts.
 
-The project was also structured into separate JavaScript modules to keep the game state, game logic, word logic, and UI code separated and easier to maintain.
+The project was also structured into separate JavaScript modules to keep the game state, game flow, word logic, and UI code separated and easier to maintain.
+
+The UI uses temporary CSS animation classes for effects such as letter input, invalid guesses, and tile flipping. These classes are automatically cleaned up when their animations finish, allowing the same animations to be triggered repeatedly.
 
 ## Possible Future Improvements
 
 * Add a statistics system
 * Add a daily challenge mode
-* Add a virtual keyboard with more detailed letter states
 * Add win/loss animations
 * Add a dark/light theme
 * Add sound effects
 * Improve accessibility
 * Add difficulty settings
+* Add more detailed game statistics
+* Add keyboard shortcuts or additional input options
