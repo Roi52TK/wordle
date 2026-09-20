@@ -132,6 +132,16 @@ body {
     font-weight: 700;
 }
 
+.tile.letter {
+    animation: popping-animation 0.25s ease-in-out;
+}
+
+@keyframes popping-animation {
+    0% { transform: scale(1) }
+    50% { transform: scale(0.75) }
+    100% { transform: scale(1) }
+}
+
 .tile.shake {
     animation: horizontal-shaking 0.25s ease-in-out;
 }

@@ -5,6 +5,7 @@ import {
     resetLettersStatus,
     updateKeyboardDisplay,
     updateGuessDisplay,
+    animateTile,
     displayGuessResult,
     updateLettersStatus,
     showMessage,
@@ -51,6 +52,7 @@ function handleLetterPressEvent(letter) {
     if (gameState.currentGuess.length < gameSettings.wordLength) {
         gameState.currentGuess += letter;
         updateGuessDisplay();
+        animateTile(gameState.currentRow, gameState.currentGuess.length - 1);
     }
 }
 
@@ -85,7 +87,7 @@ function onEnterClickEvent() {
         updateKeyboardDisplay();
 
         const isWin = checkGuessResult(result);
-        
+
         if (isWin) {
             onGameWon();
             return;

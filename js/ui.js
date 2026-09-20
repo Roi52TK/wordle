@@ -37,12 +37,28 @@ export function createBoard() {
             const tile = document.createElement("div");
 
             tile.className = "tile";
+            tile.addEventListener("animationend", handleTileAnimationEnd);
+            
             rowTiles.push(tile);
             row.appendChild(tile);
         }
 
         boardTiles.push(rowTiles);
         board.appendChild(row);
+    }
+}
+
+function handleTileAnimationEnd(event) {
+    const tile = event.currentTarget;
+
+    if (event.animationName === "horizontal-shaking") {
+        tile.classList.remove("shake");
+    }
+    else if (event.animationName === "popping-animation") {
+        tile.classList.remove("letter");
+    }
+    else if (event.animationName === "tile-flip") {
+        tile.classList.remove("flip");
     }
 }
 
@@ -106,13 +122,17 @@ export function updateGuessDisplay() {
         boardTiles[gameState.currentRow][charIndex].textContent = char;
     }
 
-    for (
-        let charIndex = gameState.currentGuess.length;
-        charIndex < gameSettings.wordLength;
-        charIndex++
-    ) {
+    for (let charIndex = gameState.currentGuess.length; charIndex < gameSettings.wordLength; charIndex++ ) {
         boardTiles[gameState.currentRow][charIndex].textContent = "";
     }
+}
+
+export function animateTile(row, col) {
+    const tile = boardTiles[row][col];
+
+    tile.classList.remove("letter");
+    void tile.offsetWidth;
+    tile.classList.add("letter");
 }
 
 export function displayGuessResult(result) {
