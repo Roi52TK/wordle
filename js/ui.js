@@ -104,6 +104,7 @@ export function shakeRow(rowNum) {
     const row = boardTiles[rowNum];
 
     row.forEach(tile => {
+        tile.classList.remove("letter");
         tile.classList.remove("shake");
 
         void tile.offsetWidth;
