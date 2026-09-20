@@ -57,9 +57,6 @@ function handleTileAnimationEnd(event) {
     else if (event.animationName === "popping-animation") {
         tile.classList.remove("letter");
     }
-    else if (event.animationName === "tile-flip") {
-        tile.classList.remove("flip");
-    }
 }
 
 export function createKeyboard(handleKeyEvent) {
