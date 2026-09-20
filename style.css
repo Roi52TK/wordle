@@ -72,6 +72,7 @@ body {
 }
 
 #play-again-btn {
+    -webkit-tap-highlight-color: transparent;
     visibility: hidden;
     margin-top: 20px;
     height: 54px;
@@ -185,6 +186,7 @@ body {
 }
 
 .keyboard-button {
+    -webkit-tap-highlight-color: transparent;
     height: 54px;
     min-width: 43px;
     padding: 0 8px;
