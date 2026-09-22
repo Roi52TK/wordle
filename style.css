@@ -233,6 +233,18 @@ body {
     background: #a0a0a0;
 }
 
+.keyboard-button.absent:hover {
+    background-color: #3a3a3a;
+}
+
+.keyboard-button.correct:hover {
+    background-color: #109c0e;
+}
+
+.keyboard-button.present:hover {
+    background-color: #fadb42;
+}
+
 .keyboard-button:active {
     transform: scale(0.94);
 }
